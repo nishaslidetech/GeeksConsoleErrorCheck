@@ -70,8 +70,8 @@ public class SliPage extends BaseClass {
 		Thread.sleep(3000);
 	}
 
-	@Then("^click on pagination number and check the console error for two page only for sli$")
-	public void click_on_pagination_number_and_check_the_console_error_for_two_page_only_for_sli() throws Throwable {
+	@Then("^Click on pagination number and check the console error for two page only for sli pages$")
+	public void Click_on_pagination_number_and_check_the_console_error_for_two_page_only_for_sli_pages() throws Throwable {
 		List<WebElement> sizeofPagination = driver
 				.findElements(By.xpath("//div[3]/div[1]/section[1]/div[1]/div[1]/div[2]/div[1]/div[2]/ul[1]//li//a[1]"));
 
