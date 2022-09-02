@@ -7,11 +7,11 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
-import SetupClass.Set;
 import io.cucumber.java.After;
 import io.cucumber.java.Scenario;
+import setupClass.BaseClass;
 
-public class TakeImageStep extends Set {
+public class TakeImageStep extends BaseClass {
 	@After
 	public void tearDown(Scenario scenario) {
 		if (scenario.isFailed()) {
