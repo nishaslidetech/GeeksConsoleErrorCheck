@@ -21,6 +21,7 @@ public class MostDownload extends BaseClass {
 	@Given("^user is already on home page$")
 	public void user_is_already_on_home_page() throws Throwable {
 		log.info("user is already on Home page");
+		driver.get(AppURL);
 		BaseClass.ClearBrowserCache();
 	}
 
