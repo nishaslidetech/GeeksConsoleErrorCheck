@@ -44,10 +44,8 @@ public class FreePPT extends BaseClass {
 	public void click_on_the_any_of_one_ppt_and_verify_the_console_error_for_free_user() throws Throwable {
 		try {
 			Thread.sleep(3000);
-			select_ppt = wait.until(ExpectedConditions
-					.elementToBeClickable(By.xpath("//div[2]/div[1]/div[1]/div[1]/a[1]/img[1]")));
-			js.executeScript("arguments[0].scrollIntoView();", select_ppt);
-			select_ppt.click();
+			List <WebElement> select_ppt = driver.findElements(By.xpath("//a[@class = 'free_product_dow']//img"));
+			select_ppt.get(1).click();
 			Thread.sleep(3000);
 			checkConsoleError();
 			driver.navigate().back();
@@ -61,7 +59,7 @@ public class FreePPT extends BaseClass {
 	public void check_the_pagination_and_check_the_console_error() throws Throwable {
 
 		// this code was for pagination
-		List<WebElement> sizeofPagination = driver.findElements(By.xpath("//div[3]/div[1]/section[2]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/form[1]/ul[1]/li/a"));
+		List<WebElement> sizeofPagination = driver.findElements(By.xpath("//div[@class = 'product-info free_product-info']//ul//li"));
 
 		System.out.println(sizeofPagination.size() + " = size");
 
@@ -73,8 +71,9 @@ public class FreePPT extends BaseClass {
 				if (!driver.findElements(By.xpath("//div[@class='product-info free_product-info']//a[@title='Next']//img")).isEmpty()) {
 
 					WebElement nextButton = driver
-							.findElement(By.xpath("//div[@class='product-info free_product-info']//a[@title='Next']//img"));
-					 js.executeScript("arguments[0].scrollIntoView(true);", nextButton);
+							.findElement(
+									By.xpath("//div[@class='product-info free_product-info']//a[@title='Next']//img"));
+					js.executeScript("arguments[0].scrollIntoView(true);", nextButton);
 					nextButton.click();
 
 					Thread.sleep(3000);

@@ -39,26 +39,21 @@ public class NewAdditions extends BaseClass {
 	@Then("click on any of PPt and check the console error")
 	public void click_on_any_of_p_pt_and_check_the_console_error() throws InterruptedException, IOException {
 		try {
-			WebElement selectPPt = wait.until(ExpectedConditions
-					.elementToBeClickable(By.xpath("//div[2]/div[1]/div[1]/div[1]/a[1]/div[1]/img[1]")));
-			js.executeScript("arguments[0].scrollIntoView();", selectPPt);
-			selectPPt.click();
-			Thread.sleep(3000);
+			Thread.sleep(2000);
+			List<WebElement> select_ppt = driver.findElements(By.cssSelector(".box-top >img"));
+			select_ppt.get(1).click();
 			checkConsoleError();
 			driver.navigate().back();
-			Thread.sleep(4000);
-		} catch (WebDriverException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Thread.sleep(3000);
 		} catch (NoSuchElementException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 		}
 	}
 
 	@Then("click on pagination number and check the console error for two page only")
-	public void click_on_pagination_number_and_check_the_console_error_for_two_page_only() throws InterruptedException, IOException {
-		List<WebElement> sizeofPagination = driver.findElements(By.xpath("//div[2]/div[1]/div[1]/form[1]/ul/li/a"));
+	public void click_on_pagination_number_and_check_the_console_error_for_two_page_only()
+			throws InterruptedException, IOException {
+		List<WebElement> sizeofPagination = driver.findElements(By.xpath("//div[@class = 'product-info']//ul//li"));
 
 		System.out.println(sizeofPagination.size() + " = size");
 
@@ -67,12 +62,11 @@ public class NewAdditions extends BaseClass {
 
 			// click on pagination link
 			for (int j = 1; j < 6; j++) {
-				if (!driver.findElements(By.xpath("//div[2]//div[1]//div[1]//form[1]//ul[1]//li[12]//a[1]//img"))
-						.isEmpty()) {
+				if (!driver.findElements(By.xpath("//div[@class = 'product-info']//a[@title = 'Next']")).isEmpty()) {
 
-					WebElement nextButton = driver
-							.findElement(By.xpath("//div[2]//div[1]//div[1]//form[1]//ul[1]//li[12]//a[1]//img"));
-					js.executeScript("arguments[0].scrollIntoView(true);", nextButton);
+					WebElement nextButton = wait.until(ExpectedConditions
+							.elementToBeClickable(By.xpath("//div[@class = 'product-info']//a[@title = 'Next']")));
+					// js.executeScript("arguments[0].scrollIntoView(true);", nextButton);
 					nextButton.click();
 
 					Thread.sleep(3000);

@@ -2,6 +2,7 @@ package stepDefination;
 
 import java.util.List;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -43,36 +44,36 @@ public class MostDownload extends BaseClass {
 
 		try {
 			Thread.sleep(2000);
-			WebElement select_ppt = wait.until(ExpectedConditions
-					.elementToBeClickable(By.xpath("//div[2]/div[1]/div[1]/div[1]/a[1]/div[1]/img[1]")));
-			js.executeScript("arguments[0].scrollIntoView();", select_ppt);
-			select_ppt.click();
+			List<WebElement> select_ppt = driver.findElements(By.cssSelector(".box-top >img"));
+			select_ppt.get(1).click();
 			checkConsoleError();
 			driver.navigate().back();
 			Thread.sleep(3000);
 		} catch (NoSuchElementException e) {
 
 		}
+
 	}
 
 	@Then("^click on the pagination and check the console errorfor two pages only$")
 	public void click_on_the_pagination_and_check_the_console_errorfor_two_pages_only() throws Throwable {
 
-		List<WebElement> sizeofPagination = driver.findElements(By.xpath("//div[2]/div[1]/div[1]/form[1]/ul/li/a"));
+		List<WebElement> sizeofPagination = driver.findElements(By.xpath("//div[@class = 'product-info']//li"));
 
 		System.out.println(sizeofPagination.size() + " = size");
+
+		Assert.assertTrue(sizeofPagination.size() > 0);
 
 		if (sizeofPagination.size() > 0) {
 			System.out.println("pagination exists");
 
 			// click on pagination link
 			for (int j = 1; j < 6; j++) {
-				if (!driver.findElements(By.xpath("//div[2]//div[1]//div[1]//form[1]//ul[1]//li[12]//a[1]//img"))
-						.isEmpty()) {
+				if (!driver.findElements(By.xpath("//div[@class = 'product-info']//a[@title = 'Next']")).isEmpty()) {
 
 					WebElement nextButton = driver
-							.findElement(By.xpath("//div[2]//div[1]//div[1]//form[1]//ul[1]//li[12]//a[1]//img"));
-					js.executeScript("arguments[0].scrollIntoView(true);", nextButton);
+							.findElement(By.xpath("//div[@class = 'product-info']//a[@title = 'Next']"));
+					// js.executeScript("arguments[0].scrollIntoView(true);", nextButton);
 					nextButton.click();
 
 					Thread.sleep(3000);
@@ -87,6 +88,7 @@ public class MostDownload extends BaseClass {
 			}
 		} else {
 			System.out.println("No pagination exists");
+
 		}
 
 		/*

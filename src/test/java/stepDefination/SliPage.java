@@ -35,8 +35,8 @@ public class SliPage extends BaseClass {
 
 			// click on "hr report" in left navigation
 
-			WebElement hr_Budget = wait
-					.until(ExpectedConditions.elementToBeClickable(By.xpath("//ul[1]/div[1]/div[1]/ul[1]/li[6]/a[1]")));
+			WebElement hr_Budget = wait.until(ExpectedConditions
+					.elementToBeClickable(By.cssSelector(".sli_ac_suggestions >ul >li:nth-child(6)")));
 			hr_Budget.click();
 			Thread.sleep(3000);
 			checkConsoleError();
@@ -63,9 +63,8 @@ public class SliPage extends BaseClass {
 		// div[@class = 'container listing-container sli_generic_container']//ul//li[4]
 		driver.navigate().refresh();
 		Thread.sleep(4000);
-		WebElement selectPpt = wait.until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//div[3]/div[1]/div[1]/div[1]/div[1]/a[1]/img[1]")));
-		js.executeScript("arguments[0].click();", selectPpt);
+		List<WebElement> selectPpt = driver.findElements(By.xpath("//div[@class = 'box-top sli_image']"));
+		selectPpt.get(0).click();
 		Thread.sleep(3000);
 		checkConsoleError();
 		driver.navigate().back();
@@ -73,9 +72,10 @@ public class SliPage extends BaseClass {
 	}
 
 	@Then("^Click on pagination number and check the console error for two page only for sli pages$")
-	public void Click_on_pagination_number_and_check_the_console_error_for_two_page_only_for_sli_pages() throws Throwable {
+	public void Click_on_pagination_number_and_check_the_console_error_for_two_page_only_for_sli_pages()
+			throws Throwable {
 		List<WebElement> sizeofPagination = driver
-				.findElements(By.xpath("//div[3]/div[1]/section[1]/div[1]/div[1]/div[2]/div[1]/div[2]/ul[1]//li//a[1]"));
+				.findElements(By.xpath("//div[@class='product-info sli_generic_container']//ul//li"));
 
 		System.out.println(sizeofPagination.size() + " = size");
 
@@ -85,10 +85,13 @@ public class SliPage extends BaseClass {
 			// click on pagination link
 			for (int i = 1; i < sizeofPagination.size();) {
 
-				if (!driver.findElements(By.xpath("//div[@class='product-info sli_generic_container']//li[@class='page-nav sli_next_wrap']//img[@alt='Arrow']")).isEmpty()) {
+				if (!driver
+						.findElements(By.xpath(
+								"//div[@class='product-info sli_generic_container']//a[@class = 'sli_next_page']"))
+						.isEmpty()) {
 
-					WebElement nextButton = driver
-							.findElement(By.xpath("//div[@class='product-info sli_generic_container']//li[@class='page-nav sli_next_wrap']//img[@alt='Arrow']"));
+					WebElement nextButton = driver.findElement(By
+							.xpath("//div[@class='product-info sli_generic_container']//a[@class = 'sli_next_page']"));
 					nextButton.click();
 
 					Thread.sleep(3000);

@@ -1,5 +1,9 @@
 package stepDefination;
 
+import java.io.IOException;
+import java.util.List;
+
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriverException;
@@ -16,6 +20,7 @@ public class eBooks extends BaseClass {
 	WebElement selecteBook;
 	Select sortBy;
 	WebElement selectValue;
+	List<WebElement> selecteBooks;
 
 	@Given("^user is the on home page$")
 	public void user_is_the_on_home_page() throws Throwable {
@@ -26,6 +31,7 @@ public class eBooks extends BaseClass {
 
 	@Then("^click on eBooks text and check console error$")
 	public void click_on_eBooks_text_and_check_console_error() throws Throwable {
+
 		WebElement eBooks = wait.until(ExpectedConditions.elementToBeClickable(By.linkText("EBOOKS")));
 		eBooks.click();
 		Thread.sleep(3000);
@@ -33,12 +39,12 @@ public class eBooks extends BaseClass {
 
 		// go to the eBooks details page and check the console error
 
-		WebElement selecteBook = wait.until(
-				ExpectedConditions.elementToBeClickable(By.xpath("//div[2]/div[1]/div[1]/div[1]/div[1]/a[1]/img[1]")));
-		selecteBook.click();
+		selecteBooks = driver.findElements(By.cssSelector(".ebook-container >div >a >img"));
+		selecteBooks.get(1).click();
 		Thread.sleep(3000);
 		checkConsoleError();
 		driver.navigate().back();
+
 	}
 
 	@Then("^select option from sort By and check the console error$")
@@ -53,63 +59,62 @@ public class eBooks extends BaseClass {
 			Thread.sleep(3000);
 			checkConsoleError();
 
-			WebElement selectValue = driver.findElement(By.id("sortBooks"));
+			WebElement selectValue = wait.until(ExpectedConditions.elementToBeClickable(By.id("sortBooks")));
 			sortBy = new Select(selectValue);
 
 			sortBy.selectByVisibleText("New & Popular");
 			Thread.sleep(3000);
 			checkConsoleError();
 
-			// go to the eBooks details page and check the console error
-			selecteBook = wait.until(ExpectedConditions
-					.elementToBeClickable(By.xpath("//div[2]/div[1]/div[1]/div[1]/div[1]/a[1]/img[1]")));
-			selecteBook.click();
+			// go to the eBooks details page and check the console error selecteBooks =
+			driver.findElements(By.cssSelector(".ebook-container >div >a >img"));
+			selecteBooks.get(1).click();
 			Thread.sleep(3000);
 			checkConsoleError();
 			driver.navigate().back();
 
 			// again select dropdown list
+
 			Thread.sleep(3000);
 			dropDown = wait.until(
 					ExpectedConditions.elementToBeClickable(By.xpath("//span[@id='select2-sortBooks-container']")));
 			dropDown.click();
 			Thread.sleep(3000);
 
-			selectValue = driver.findElement(By.id("sortBooks"));
+			selectValue = wait.until(ExpectedConditions.elementToBeClickable(By.id("sortBooks")));
 			sortBy = new Select(selectValue);
 			sortBy.selectByVisibleText("Name");
 			Thread.sleep(3000);
 			checkConsoleError();
 
-			// go to the eBooks details page and check the console error
-			selecteBook = wait.until(ExpectedConditions
-					.elementToBeClickable(By.xpath("//div[2]/div[1]/div[1]/div[1]/div[1]/a[1]/img[1]")));
-			selecteBook.click();
+			// go to the eBooks details page and check the console error selecteBooks =
+			driver.findElements(By.cssSelector(".ebook-container >div >a >img"));
+			selecteBooks.get(1).click();
 			Thread.sleep(3000);
 			checkConsoleError();
 			driver.navigate().back();
-
-			WebElement buyNow = wait.until(ExpectedConditions
-					.elementToBeClickable(By.xpath("//div[2]/div[1]/div[1]/div[1]/div[2]/div[3]/form[1]/a[1]")));
-			buyNow.click();
-			Thread.sleep(3000);
-			checkConsoleError();
-			// driver.navigate().back();
 
 		} catch (WebDriverException e) {
 		}
 
 	}
 
-	@Given("^Go to the home page$")
-	public void go_to_the_home_page() throws Throwable {
-		driver.get(AppURL);
-		log.info("It's opening the website URL");
+	@Then("click on buy now button and check console error")
+	public void click_on_buy_now_button_and_check_console_error() throws InterruptedException, IOException {
+		List<WebElement> buyNow = driver.findElements(By.cssSelector(".form_buynow >a"));
+		buyNow.get(1).click();
+		Thread.sleep(3000);
+		checkConsoleError();
 
+		// verify the pop-up
+		String pop_UP = wait
+				.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".cd-user-modal-container >h4")))
+				.getText();
+		System.out.println("pop_UP=  " + pop_UP);
 	}
 
-	@Then("^Enter paid valid credentials$")
-	public void enter_paid_valid_credentials() throws Throwable {
+	@Then("Enter paid user name {string} and password {string}")
+	public void enter_paid_user_name_and_password(String username, String password) throws InterruptedException {
 		try {
 			Thread.sleep(3000);
 			WebElement sign_in = wait
@@ -123,11 +128,11 @@ public class eBooks extends BaseClass {
 			Thread.sleep(3000);
 			WebElement email = wait
 					.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='E-mail Address']")));
-			email.sendKeys("nisha.dhiman@slidetech.in");
+			email.sendKeys(username);
 
 			WebElement password_field = wait
 					.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Password']")));
-			password_field.sendKeys("Qwerty");
+			password_field.sendKeys(password);
 			WebElement login_btn = wait
 					.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@name='Submit']")));
 			login_btn.click();
@@ -135,83 +140,16 @@ public class eBooks extends BaseClass {
 		} catch (NoSuchElementException e) {
 
 		}
+
+		System.out.println(driver.getTitle() + "Title");
 	}
 
-	@Then("^click on eBooks on the top navigation bar$")
-	public void click_on_eBooks_on_the_top_navigation_bar() throws Throwable {
-		Thread.sleep(5000);
-		
-		WebElement eBooks = wait.until(ExpectedConditions.elementToBeClickable(By.linkText("EBOOKS")));
-		eBooks.click();
-		Thread.sleep(3000);
+	@Then("verify that user should be on suscription page")
+	public void verify_that_user_should_be_on_suscription_page() throws InterruptedException, IOException {
+		// System.out.println(driver.getTitle() + "Title");
+		String Expected_Title = "Account Dashboard";
+		Assert.assertEquals(driver.getTitle(), Expected_Title);
 		checkConsoleError();
-
-		// go to the eBooks details page and check the console error
-
-		WebElement selecteBook = wait.until(
-				ExpectedConditions.elementToBeClickable(By.xpath("//div[2]/div[1]/div[1]/div[1]/div[1]/a[1]/img[1]")));
-		selecteBook.click();
-		Thread.sleep(3000);
-		checkConsoleError();
-		driver.navigate().back();
-	}
-
-	@Then("^Select option from sort By and check the console error$")
-	public void Select_option_from_sort_By_and_check_the_console_error() throws Throwable {
-		try {
-
-			Thread.sleep(3000);
-			dropDown = wait.until(
-					ExpectedConditions.elementToBeClickable(By.xpath("//span[@id='select2-sortBooks-container']")));
-			dropDown.click();
-			Thread.sleep(3000);
-			checkConsoleError();
-
-			WebElement selectValue = driver.findElement(By.id("sortBooks"));
-			sortBy = new Select(selectValue);
-
-			sortBy.selectByVisibleText("New & Popular");
-			Thread.sleep(3000);
-			checkConsoleError();
-
-			// go to the eBooks details page and check the console error
-			selecteBook = wait.until(ExpectedConditions
-					.elementToBeClickable(By.xpath("//div[2]/div[1]/div[1]/div[1]/div[1]/a[1]/img[1]")));
-			selecteBook.click();
-			Thread.sleep(3000);
-			checkConsoleError();
-			driver.navigate().back();
-
-			// again select dropdown list
-			Thread.sleep(3000);
-			dropDown = wait.until(
-					ExpectedConditions.elementToBeClickable(By.xpath("//span[@id='select2-sortBooks-container']")));
-			dropDown.click();
-			Thread.sleep(3000);
-
-			selectValue = driver.findElement(By.id("sortBooks"));
-			sortBy = new Select(selectValue);
-			sortBy.selectByVisibleText("Name");
-			Thread.sleep(3000);
-			checkConsoleError();
-
-			// go to the eBooks details page and check the console error
-			selecteBook = wait.until(ExpectedConditions
-					.elementToBeClickable(By.xpath("//div[2]/div[1]/div[1]/div[1]/div[1]/a[1]/img[1]")));
-			selecteBook.click();
-			Thread.sleep(3000);
-			checkConsoleError();
-			driver.navigate().back();
-
-			WebElement buyNow = wait.until(ExpectedConditions
-					.elementToBeClickable(By.xpath("//div[2]/div[1]/div[1]/div[1]/div[2]/div[3]/form[1]/a[1]")));
-			buyNow.click();
-			Thread.sleep(3000);
-			checkConsoleError();
-			// driver.navigate().back();
-
-		} catch (WebDriverException e) {
-		}
 	}
 
 	@Then("^Logout from the application and verify the page$")
