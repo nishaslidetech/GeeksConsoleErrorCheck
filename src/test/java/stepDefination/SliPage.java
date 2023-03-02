@@ -19,6 +19,8 @@ public class SliPage extends BaseClass {
 	public void user_is_on_the_home_page_now() throws Throwable {
 		driver.get(AppURL);
 		ClearBrowserCache();
+		ClearBrowserCache1();
+		Thread.sleep(3000);
 		log.info("It's opening the website URL");
 
 	}
@@ -63,6 +65,7 @@ public class SliPage extends BaseClass {
 	public void go_to_the_sli_listing_page_and_check_the_console_error() throws Throwable {
 		// div[@class = 'container listing-container sli_generic_container']//ul//li[4]
 		driver.navigate().refresh();
+		System.out.println("url = " + driver.getCurrentUrl() );
 		Thread.sleep(4000);
 		List<WebElement> selectPpt = driver.findElements(By.xpath("//div[@class = 'box-top sli_image']"));
 		selectPpt.get(0).click();
@@ -70,6 +73,8 @@ public class SliPage extends BaseClass {
 		checkConsoleError();
 		driver.navigate().back();
 		Thread.sleep(3000);
+		
+		System.out.println("url = " + driver.getCurrentUrl() );
 	}
 
 	@Then("^Click on pagination number and check the console error for two page only for sli pages$")
