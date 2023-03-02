@@ -14,9 +14,10 @@ import setupClass.BaseClass;
 public class FooterLinks extends BaseClass {
 
 	@When("Go to the Geeks Home page")
-	public void Go_to_the_Geeks_Home_page() throws InterruptedException {
+	public void Go_to_the_Geeks_Home_page() throws Throwable {
 
 		driver.get(AppURL);
+		ClearBrowserCache();
 		log.info("It's opening the website URL");
 		Thread.sleep(5000);
 	}

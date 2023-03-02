@@ -23,6 +23,7 @@ public class FreePPT extends BaseClass {
 	@Given("^user is already on Home page$")
 	public void user_is_already_on_Home_page() throws Throwable {
 		driver.get(AppURL);
+		ClearBrowserCache();
 		log.info("user is already on Home page");
 		BaseClass.ClearBrowserCache();
 	}

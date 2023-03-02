@@ -18,6 +18,7 @@ public class SliPage extends BaseClass {
 	@Given("^user is on the home page now$")
 	public void user_is_on_the_home_page_now() throws Throwable {
 		driver.get(AppURL);
+		ClearBrowserCache();
 		log.info("It's opening the website URL");
 
 	}
@@ -73,7 +74,7 @@ public class SliPage extends BaseClass {
 
 	@Then("^Click on pagination number and check the console error for two page only for sli pages$")
 	public void Click_on_pagination_number_and_check_the_console_error_for_two_page_only_for_sli_pages()
-			throws Throwable {
+		throws Throwable {
 		List<WebElement> sizeofPagination = driver
 				.findElements(By.xpath("//div[@class='product-info sli_generic_container']//ul//li"));
 

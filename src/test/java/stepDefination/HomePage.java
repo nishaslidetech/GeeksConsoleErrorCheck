@@ -15,6 +15,7 @@ public class HomePage extends BaseClass {
 	@Given("^Go the Home page$")
 	public void go_the_Home_page() throws Throwable {
 		driver.get(AppURL);
+		ClearBrowserCache();
 		log.info("It's opening the website URL");
 
 	}

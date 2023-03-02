@@ -15,8 +15,9 @@ import setupClass.BaseClass;
 
 public class NewAdditions extends BaseClass {
 	@When("Go to Geeks Home page")
-	public void Go_to_Geeks_Home_page() {
+	public void Go_to_Geeks_Home_page() throws Throwable {
 		driver.get(AppURL);
+		ClearBrowserCache();
 	}
 
 	@Then("check console error for New Additions")
