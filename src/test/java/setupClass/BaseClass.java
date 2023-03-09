@@ -141,18 +141,18 @@ public class BaseClass {
 	public static WebElement elementToBeClickable(By locator) {
 		FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
 				// Check for condition in every 2 seconds
-				.pollingEvery(Duration.ofSeconds(2))
+				.pollingEvery(2, TimeUnit.SECONDS)
 				// Till time out i.e. 30 seconds
-				.withTimeout(Duration.ofSeconds(30)).ignoring(NoSuchElementException.class);
+				.withTimeout(30, TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
 		return wait.until(ExpectedConditions.elementToBeClickable(locator));
 	}
 
 	public static WebElement precenceOfElement(By locator) {
 		FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
 				// Check for condition in every 2 seconds
-				.pollingEvery(Duration.ofSeconds(2))
+				.pollingEvery(2, TimeUnit.SECONDS)
 				// Till time out i.e. 30 seconds
-				.withTimeout(Duration.ofSeconds(30)).ignoring(NoSuchElementException.class);
+				.withTimeout(30, TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
 		return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
 	}
 

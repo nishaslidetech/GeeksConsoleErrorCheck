@@ -114,9 +114,11 @@ public class eBooks extends BaseClass {
 	}
 
 	@Then("Enter paid user name {string} and password {string}")
-	public void enter_paid_user_name_and_password(String username, String password) throws InterruptedException {
+	public void enter_paid_user_name_and_password(String username, String password) throws Throwable {
 		try {
 			Thread.sleep(3000);
+			 ClearBrowserCache1();
+			 Thread.sleep(3000);
 			WebElement sign_in = wait
 					.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[normalize-space()='Login']//i")));
 			sign_in.click();
